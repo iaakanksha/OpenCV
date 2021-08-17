@@ -1,0 +1,25 @@
+# Face Detection using Haar Cascade classifier
+
+import cv2
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+cap = cv2.VideoCapture(0)
+# while loop is used to detect face in video
+#for face detection in images only for loop is used
+
+while cap.isOpened():
+    _, img = cap.read()
+#img = cv2.imread('test.png.jpg')  for face detection in image
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+
+    for (x, y, w, h) in faces:
+
+        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 3)
+        cv2.putText(img, 'aakanksha', (120,120), cv2.FONT_HERSHEY_PLAIN, 3, (0,0,255), 4) #its optional its just used to put text
+
+    cv2.imshow('img', img)
+   # cv2.waitKey()
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+       break
+cap.release()
